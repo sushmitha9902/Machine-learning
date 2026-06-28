@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Spam Detection</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Email Spam Detection</h1>
+    <h2>Model Accuracy</h2>
+
+<table border="1" align="center" cellpadding="10">
+
+    <tr>
+        <th>Model</th>
+        <th>Accuracy</th>
+    </tr>
+
+    {% for model, accuracy in accuracies.items() %}
+
+    <tr>
+        <td>{{ model }}</td>
+        <td>{{ accuracy }}%</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<br><br>
+
+    <form action="/predict" method="POST">
+
+        <textarea
+            name="message"
+            placeholder="Enter your message here"
+            required></textarea>
+
+        <br><br>
+
+        <select name="model">
+
+            <option value="Logistic Regression">
+                Logistic Regression
+            </option>
+
+            <option value="Naive Bayes">
+                Naive Bayes
+            </option>
+
+            <option value="SVM">
+                SVM
+            </option>
+
+            <option value="Random Forest">
+                Random Forest
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <button type="submit">
+            Check Message
+        </button>
+
+    </form>
+
+    {% if prediction %}
+
+        <h2>{{ prediction }}</h2>
+
+        <h3>Model Used: {{ model_used }}</h3>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
